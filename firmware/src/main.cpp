@@ -1,12 +1,18 @@
 #include <Arduino.h>
 
-// 起動時に一度だけ実行されます。
 void setup() {
     Serial.begin(115200);
+    Serial.println("Ready");
 }
 
-// setup()の後、繰り返し実行されます。
 void loop() {
-    Serial.println("Hello from ESP32!");
-    delay(1000);
+    if (Serial.available() > 0) {
+        char received = Serial.read();
+
+        if (received == '1') {
+            Serial.println("Command 1 received");
+        } else if (received == '0') {
+            Serial.println("Command 0 received");
+        }
+    }
 }
